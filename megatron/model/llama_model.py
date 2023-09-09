@@ -275,6 +275,8 @@ class LlamaParallelMLP(MegatronModule):
 
         intermediate_parallel = self.activation_func(intermediate_parallel)
 
+        intermediate_parallel = self.activation_func(self.gate_proj(hidden_states)[0]) * self.up_proj(hidden_states)[0]
+
         output, _ = self.down_proj(intermediate_parallel)
         return output
 
